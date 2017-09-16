@@ -12,10 +12,10 @@
         <link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="{{ path('blog_rss') }}">
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
         {% endblock %}
         
-        <script type="text/javascript" src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+ 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <div style=background-color:#1F77B4 ; color : white">
         
@@ -23,6 +23,10 @@
         <p style="color: white; padding: 5px ;">By nadir.fouka@gmail.com</p>
         <img alt="" src="https://symfony.com/images/v5/logos/header-logo.svg" style="float: right;margin-top: -110px;padding-right: 5px;">
         </div>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css">
+        
     </head>
 
     <body id="{% block body_id %}{% endblock %}">
@@ -30,8 +34,8 @@
         {% block header %}
             <header>
                 <div class="navbar navbar-default navbar-static-top" role="navigation">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
+                    <div class="container-fluid" style="background-color: #134E77 ;">
+                        <div class="navbar-header" >
                             <a class="navbar-brand" href="{{ path('homepage') }}">
                                 Application INTRANET SAS
                             </a>
@@ -45,6 +49,8 @@
                                 <span class="icon-bar"></span>
                             </button>
                         </div>
+                        
+                        
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav navbar-right">
 
@@ -83,6 +89,9 @@
                                             <li {% if app.request.locale == locale.code %}aria-checked="true" class="active"{% else %}aria-checked="false"{% endif %} role="menuitem"><a href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">{{ locale.name|capitalize }}</a></li>
                                         {% endfor %}
                                     </ul>
+                                    
+                                        
+                                        
                                 </li>
                             </ul>
                         </div>
@@ -99,26 +108,76 @@
        
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-6">
-      <div id="pieChart" style="height: 260px; width: 100%;">
-      </div>
+    <div class="col-md-3">
+    
+    <div class="section about">
+
+<div id="alert_comment">
+</div>
+
+        <div class="well well-lg">
+       				<span></span>
+	    </div>
+</div>
+    
+    
+                     
     </div>
-    <div class="col-md-6">
-      <div id="columnChart" style="height: 260px; width: 100%;">
-      </div>
+    <div class="col-md-3">
+    
+    <div class="section about">
+    <div class="well well-lg">
+       
+Ceci est une application de démonstration construite avec le framework Symfony pour illustrer la façon recommandée de développer des applications Symfony.
+
+Pour plus d'informations, <a href="https://symfony.com/doc">consultez la documentation de Symfony. </a>
     </div>
+</div>
+
+                          
+
+    </div>
+    
+    <div class="col-md-3">
+                            
+
+    <div class="section about">
+    <div class="well well-lg">
+       
+Ceci est une application de démonstration construite avec le framework Symfony pour illustrer la façon recommandée de développer des applications Symfony.
+
+Pour plus d'informations, <a href="https://symfony.com/doc">consultez la documentation de Symfony. </a>
+    </div>
+</div>
+
+    </div>
+    <div class="col-md-3">
+                            
+    <div class="section about">
+    <div class="well well-lg">
+       
+Ceci est une application de démonstration construite avec le framework Symfony pour illustrer la façon recommandée de développer des applications Symfony.
+
+Pour plus d'informations,<a href="https://symfony.com/doc">consultez la documentation de Symfony. </a>
+    </div>
+</div>
+
+    </div>
+
+
+
   </div>
 </div>
 
   {% else %}        
- 
   {% endif %}
   
 <hr>
 	
-	
 	<script type="text/javascript">
 
+	$('.carousel').carousel();
+	
 	var pieChartValues = [{
 		  y: 39.16,
 		  exploded: true,
@@ -245,10 +304,15 @@
 		  chart.render();
 		}
 
+
+		$(".single-item").slick({
+			dots: true
+		});
+
+
 	</script>
-            
-            
-            
+	
+	
                 <div class="row">
                 
                     <div id="sidebar" class="col-sm-2">
@@ -348,5 +412,9 @@
            avoid errors when the 'intl' PHP extension is not available and the application
            is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
         <!-- Page rendered on {{ 'now'|localizeddate('long', 'long', null, 'UTC') }} -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+    
     </body>
 </html>
