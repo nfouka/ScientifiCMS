@@ -25,6 +25,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 /**
  * Controller used to manage blog contents in the public part of the site.
@@ -57,6 +58,23 @@ class BlogController extends Controller
         // See https://symfony.com/doc/current/templating.html#template-suffix
         return $this->render('blog/index.'.$_format.'.twig', ['posts' => $posts]);
     }
+    
+    
+    
+    
+        /**
+     * @Route("/voiture", defaults={"page": "1", "_format"="html"}, name="voiture_index")
+     * @Route("/voiture/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="voiture_index_paginated")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     *
+     * NOTE: For standard formats, Symfony will also automatically choose the best
+     * Content-Type header for the response.
+     * See https://symfony.com/doc/current/quick_tour/the_controller.html#using-formats
+     */
+
+    
+    
 
     /**
      * @Route("/posts/{slug}", name="blog_post")
@@ -112,6 +130,7 @@ class BlogController extends Controller
             // own event object classes.
             // See https://symfony.com/doc/current/components/event_dispatcher/generic_event.html
             $event = new GenericEvent($comment);
+            
 
             // When an event is dispatched, Symfony notifies it to all the listeners
             // and subscribers registered to it. Listeners can modify the information
