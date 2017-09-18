@@ -74,11 +74,12 @@ class BlogController extends Controller
     public function newAction(Request $request, Slugger $slugger)
     {
         $post = new Post();
-        $post->setAuthor($this->getUser());
+        $token = $this->container->get('security.token_storage')->getToken() ; 
+        $post->setAuthor($token->getUser());
 
         // See https://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons
         $form = $this->createForm(PostType::class, $post)
-            ->add('saveAndCreateNew', SubmitType::class);
+                     ->add('saveAndCreateNew1', SubmitType::class);
 
         $form->handleRequest($request);
 
@@ -99,7 +100,7 @@ class BlogController extends Controller
             // See https://symfony.com/doc/current/book/controller.html#flash-messages
             $this->addFlash('success', 'post.created_successfully');
 
-            if ($form->get('saveAndCreateNew')->isClicked()) {
+            if ($form->get('saveAndCreateNew1')->isClicked()) {
                 return $this->redirectToRoute('admin_post_new');
             }
 
@@ -107,7 +108,7 @@ class BlogController extends Controller
         }
 
         return $this->render('admin/blog/new.html.twig', [
-            'post' => $post,
+   
             'form' => $form->createView(),
         ]);
     }
@@ -122,6 +123,8 @@ class BlogController extends Controller
     {
         // This security check can also be performed
         // using an annotation: @Security("is_granted('show', post)")
+
+
         $this->denyAccessUnlessGranted('show', $post, 'Posts can only be shown to their authors.');
 
         return $this->render('admin/blog/show.html.twig', [
@@ -169,6 +172,7 @@ class BlogController extends Controller
      */
     public function deleteAction(Request $request, Post $post)
     {
+
         if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
             return $this->redirectToRoute('admin_post_index');
         }
@@ -186,4 +190,28 @@ class BlogController extends Controller
 
         return $this->redirectToRoute('admin_post_index');
     }
+    
+    
+    
+    
+    /**
+     * Lists all Post entities.
+     *
+     * This controller responds to two different routes with the same URL:
+     *   * 'admin_post_index' is the route with a name that follows the same
+     *     structure as the rest of the controllers of this class.
+     *   * 'admin_index' is a nice shortcut to the backend homepage. This allows
+     *     to create simpler links in the templates. Moreover, in the future we
+     *     could move this annotation to any other controller while maintaining
+     *     the route name and therefore, without breaking any existing link.
+     *
+     * @Route("/denied", name="denied")
+     * @Method("GET")
+     */
+    public function deniedAction()
+    {
+
+        return $this->render('denied/forbiden.html.twig');
+    }
+    
 }
